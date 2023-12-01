@@ -1,6 +1,6 @@
 //
 //  Constants.m
-//  background_locator_2
+//  background_locator_cp
 //
 //  Created by Mehdi Sohrabi on 6/3/20.
 //
@@ -11,6 +11,7 @@
 
 NSString *const kCallbackDispatcherKey = @"callback_dispatcher_handle_key";
 NSString *const kCallbackKey = @"callback_handle_key";
+NSString *const kGPSCallbackKey = @"gps_callback_handle_key";
 NSString *const kInitCallbackKey = @"init_callback_handle_key";
 NSString *const kInitDataCallbackKey = @"init_data_callback_key";
 NSString *const kDisposeCallbackKey = @"dispose_callback_handle_key";
@@ -38,9 +39,12 @@ NSString *const kArgCallback = @"callback";
 NSString *const kArgInitCallback = @"initCallback";
 NSString *const kArgInitDataCallback = @"initDataCallback";
 NSString *const kArgDisposeCallback = @"disposeCallback";
+NSString *const kArgGPSCallback = @"gpsCallback";
+NSString *const kArgGPSStatus = @"gpsStatus";
 NSString *const kArgLocation = @"location";
 NSString *const kArgSettings = @"settings";
 NSString *const kArgCallbackDispatcher = @"callbackDispatcher";
+
 
 NSString *const kSettingsAccuracy = @"settings_accuracy";
 NSString *const kSettingsDistanceFilter = @"settings_distanceFilter";
@@ -50,6 +54,7 @@ NSString *const kSettingsStopWithTerminate = @"settings_ios_stopWithTerminate";
 NSString *const kBCMSendLocation = @"BCM_SEND_LOCATION";
 NSString *const kBCMInit = @"BCM_INIT";
 NSString *const kBCMDispose = @"BCM_DISPOSE";
+NSString *const kBCMGpsStatus = @"BCM_GPS_STATUS";
 
 NSString *const kPrefObservingRegion = @"pref_observingRegion";
 NSString *const kPrefServiceRunning = @"pref_serviceRunning";

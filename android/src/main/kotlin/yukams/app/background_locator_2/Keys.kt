@@ -15,6 +15,9 @@ class Keys {
         val NOTIFICATION_CALLBACK_HANDLE_KEY = "NOTIFICATION_CALLBACK_HANDLE_KEY"
 
         @JvmStatic
+        val GPS_CALLBACK_HANDLE_KEY = "GPS_CALLBACK_HANDLE_KEY"
+
+        @JvmStatic
         val INIT_CALLBACK_HANDLE_KEY = "INIT_CALLBACK_HANDLE_KEY"
 
         @JvmStatic
@@ -57,6 +60,9 @@ class Keys {
         val ARG_INIT_DATA_CALLBACK = "initDataCallback"
 
         @JvmStatic
+        val ARG_GPS_CALLBACK = "gpsCallback"
+
+        @JvmStatic
         val ARG_DISPOSE_CALLBACK = "disposeCallback"
 
         @JvmStatic
@@ -67,6 +73,9 @@ class Keys {
 
         @JvmStatic
         val ARG_LONGITUDE = "longitude"
+
+        @JvmStatic
+        val ARG_GPS_STATUS = "gpsStatus"
 
         @JvmStatic
         val ARG_ACCURACY = "accuracy"
@@ -146,6 +155,9 @@ class Keys {
 
         @JvmStatic
         val BCM_SEND_LOCATION = "BCM_SEND_LOCATION"
+
+        @JvmStatic
+        val BCM_GPS_STATUS = "BCM_GPS_STATUS";
 
         @JvmStatic
         val BCM_NOTIFICATION_CLICK = "BCM_NOTIFICATION_CLICK"

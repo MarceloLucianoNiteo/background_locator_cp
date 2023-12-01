@@ -31,10 +31,10 @@ void callbackDispatcher() {
         notificationCallback();
       }
     } else if (Keys.BCM_INIT == call.method) {
-      final Map<dynamic, dynamic> args = call.arguments;
+      final Map<dynamic, dynamic>? args = call.arguments;
       final Function? initCallback = PluginUtilities.getCallbackFromHandle(
-          CallbackHandle.fromRawHandle(args[Keys.ARG_INIT_CALLBACK]));
-      Map<dynamic, dynamic>? data = args[Keys.ARG_INIT_DATA_CALLBACK];
+          CallbackHandle.fromRawHandle(args?[Keys.ARG_INIT_CALLBACK]));
+      Map<dynamic, dynamic>? data = args?[Keys.ARG_INIT_DATA_CALLBACK];
       if (initCallback != null) {
         initCallback(data);
       }
@@ -44,6 +44,19 @@ void callbackDispatcher() {
           CallbackHandle.fromRawHandle(args[Keys.ARG_DISPOSE_CALLBACK]));
       if (disposeCallback != null) {
         disposeCallback();
+      }
+    } else if(Keys.BCM_GPS_STATUS == call.method) {
+      print(call.arguments);
+
+      final Map<dynamic, dynamic> args = call.arguments;
+
+      final Function? gpsCallBack = PluginUtilities.getCallbackFromHandle(
+          CallbackHandle.fromRawHandle(args[Keys.ARG_GPS_CALLBACK]));
+
+      final data = args[Keys.ARG_GPS_STATUS];
+
+      if (gpsCallBack != null) {
+        gpsCallBack(data);
       }
     }
   });

@@ -27,6 +27,7 @@ class BackgroundLocator {
   static Future<void> registerLocationUpdate(
       void Function(LocationDto) callback,
       {void Function(Map<String, dynamic>)? initCallback,
+        required void Function(bool) gpsCallBack,
       Map<String, dynamic> initDataCallback = const {},
       void Function()? disposeCallback,
       bool autoStop = false,
@@ -37,6 +38,7 @@ class BackgroundLocator {
     }
 
     final args = SettingsUtil.getArgumentsMap(
+      gpsCallBack: gpsCallBack,
         callback: callback,
         initCallback: initCallback,
         initDataCallback: initDataCallback,

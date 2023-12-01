@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString *const kCallbackDispatcherKey;
 FOUNDATION_EXPORT NSString *const kCallbackKey;
+FOUNDATION_EXPORT NSString *const kGPSCallbackKey;
 FOUNDATION_EXPORT NSString *const kInitCallbackKey;
 FOUNDATION_EXPORT NSString *const kInitDataCallbackKey;
 FOUNDATION_EXPORT NSString *const kDisposeCallbackKey;
@@ -44,6 +45,8 @@ FOUNDATION_EXPORT NSString *const kArgDisposeCallback;
 FOUNDATION_EXPORT NSString *const kArgLocation;
 FOUNDATION_EXPORT NSString *const kArgSettings;
 FOUNDATION_EXPORT NSString *const kArgCallbackDispatcher;
+FOUNDATION_EXPORT NSString *const kArgGPSCallback;
+FOUNDATION_EXPORT NSString *const kArgGPSStatus;
 
 FOUNDATION_EXPORT NSString *const kSettingsAccuracy;
 FOUNDATION_EXPORT NSString *const kSettingsDistanceFilter;
@@ -53,6 +56,7 @@ FOUNDATION_EXPORT NSString *const kSettingsStopWithTerminate;
 FOUNDATION_EXPORT NSString *const kBCMSendLocation;
 FOUNDATION_EXPORT NSString *const kBCMInit;
 FOUNDATION_EXPORT NSString *const kBCMDispose;
+FOUNDATION_EXPORT NSString *const kBCMGpsStatus;
 
 FOUNDATION_EXPORT NSString *const kPrefObservingRegion;
 FOUNDATION_EXPORT NSString *const kPrefServiceRunning;

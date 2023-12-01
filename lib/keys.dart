@@ -31,6 +31,8 @@ class Keys {
   static const String ARG_NOTIFICATION_CALLBACK = 'notificationCallback';
   static const String ARG_INIT_CALLBACK = 'initCallback';
   static const String ARG_INIT_DATA_CALLBACK = 'initDataCallback';
+  static const String ARG_GPS_CALLBACK = 'gpsCallback';
+  static const String ARG_GPS_STATUS = 'gpsStatus';
   static const String ARG_DISPOSE_CALLBACK = 'disposeCallback';
   static const String ARG_LOCATION = 'location';
   static const String ARG_SETTINGS = 'settings';
@@ -63,6 +65,7 @@ class Keys {
       'settings_ios_stopWithTerminate';
 
   static const String BCM_SEND_LOCATION = 'BCM_SEND_LOCATION';
+  static const String BCM_GPS_STATUS = 'BCM_GPS_STATUS';
   static const String BCM_NOTIFICATION_CLICK = 'BCM_NOTIFICATION_CLICK';
   static const String BCM_INIT = 'BCM_INIT';
   static const String BCM_DISPOSE = 'BCM_DISPOSE';

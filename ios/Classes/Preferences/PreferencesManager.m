@@ -1,6 +1,6 @@
 //
 //  PreferencesManager.m
-//  background_locator_2
+//  background_locator_cp
 //
 //  Created by Mehdi Sohrabi on 6/28/20.
 //

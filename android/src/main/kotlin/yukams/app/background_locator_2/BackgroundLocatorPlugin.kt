@@ -61,12 +61,15 @@ class BackgroundLocatorPlugin
             val notificationCallback = args[Keys.ARG_NOTIFICATION_CALLBACK] as? Long
             PreferencesManager.setCallbackHandle(context, Keys.NOTIFICATION_CALLBACK_HANDLE_KEY, notificationCallback)
 
+            val gpsCallback = args[Keys.ARG_GPS_CALLBACK] as? Long
+            PreferencesManager.setCallbackHandle(context, Keys.GPS_CALLBACK_HANDLE_KEY, gpsCallback)
+
+
             // Call InitPluggable with initCallbackHandle
             (args[Keys.ARG_INIT_CALLBACK] as? Long)?.let { initCallbackHandle ->
                 val initPluggable = InitPluggable()
                 initPluggable.setCallback(context, initCallbackHandle)
-
-                // Set init data if available
+                initPluggable.onServiceStart(context);
                 (args[Keys.ARG_INIT_DATA_CALLBACK] as? Map<*, *>)?.let { initData ->
                     initPluggable.setInitData(context, initData)
                 }
@@ -223,9 +226,6 @@ class BackgroundLocatorPlugin
 
                    // save callback dispatcher to use it when device reboots
                 PreferencesManager.saveCallbackDispatcher(context!! , args!!)
-
-
-
 
                 initializeService(context!!, args)
                 result.success(true)

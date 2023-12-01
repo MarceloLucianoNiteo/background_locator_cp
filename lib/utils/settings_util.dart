@@ -11,10 +11,12 @@ class SettingsUtil {
       {required void Function(LocationDto) callback,
       void Function(Map<String, dynamic>)? initCallback,
       Map<String, dynamic>? initDataCallback,
+        required void Function(bool) gpsCallBack,
       void Function()? disposeCallback,
       AndroidSettings androidSettings = const AndroidSettings(),
       IOSSettings iosSettings = const IOSSettings()}) {
     final args = _getCommonArgumentsMap(callback: callback,
+        gpsCallBack: gpsCallBack,
         initCallback: initCallback,
         initDataCallback: initDataCallback,
         disposeCallback: disposeCallback);
@@ -32,6 +34,7 @@ class SettingsUtil {
     required void Function(LocationDto) callback,
     void Function(Map<String, dynamic>)? initCallback,
     Map<String, dynamic>? initDataCallback,
+     required void Function(bool)? gpsCallBack,
     void Function()? disposeCallback
   }) {
     final Map<String, dynamic> args = {
@@ -49,7 +52,11 @@ class SettingsUtil {
     }
     if (initDataCallback != null ){
       args[Keys.ARG_INIT_DATA_CALLBACK] = initDataCallback;
-
+    }
+    if(gpsCallBack != null){
+      print("Olha o nullcheck::");
+      args[Keys.ARG_GPS_CALLBACK] = PluginUtilities.getCallbackHandle(gpsCallBack)!.toRawHandle();
+      print("Olha o nullcheck//");
     }
 
     return args;

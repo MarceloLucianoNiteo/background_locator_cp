@@ -1,6 +1,6 @@
 //
 //  MethodCallHelper.h
-//  background_locator_2
+//  background_locator_cp
 //
 //  Created by Mehdi Sohrabi on 6/28/20.
 //
@@ -14,6 +14,7 @@
            initCallback:(int64_t)initCallback
   initialDataDictionary:(NSDictionary *_Nullable)initialDataDictionary
         disposeCallback:(int64_t)disposeCallback
+        gpsCallback:(int64_t)gpsCallback
                settings:(NSDictionary *_Nonnull)settings;
 - (void) removeLocator;
 - (BOOL) isServiceRunning;

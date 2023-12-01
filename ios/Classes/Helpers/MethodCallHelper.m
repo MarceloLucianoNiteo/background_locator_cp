@@ -1,6 +1,6 @@
 //
 //  MethodCallHelper.m
-//  background_locator_2
+//  background_locator_cp
 //
 //  Created by Mehdi Sohrabi on 6/28/20.
 //
@@ -25,8 +25,9 @@
         int64_t initCallbackHandle = [[arguments objectForKey:kArgInitCallback] longLongValue];
         NSDictionary *initialDataDictionary = [arguments objectForKey:kArgInitDataCallback];
         int64_t disposeCallbackHandle = [[arguments objectForKey:kArgDisposeCallback] longLongValue];
+        int64_t gpsCallbackHandle = [[arguments objectForKey:kArgGPSCallback] longLongValue];
         [delegate setServiceRunning:true];
-        [delegate registerLocator:callbackHandle initCallback:initCallbackHandle initialDataDictionary:initialDataDictionary disposeCallback:disposeCallbackHandle settings:arguments];
+        [delegate registerLocator:callbackHandle initCallback:initCallbackHandle initialDataDictionary:initialDataDictionary disposeCallback:disposeCallbackHandle gpsCallback:gpsCallbackHandle settings:arguments];
         result(@(YES));
     } else if ([kMethodPluginUnRegisterLocationUpdate isEqualToString:call.method]) {
         [delegate removeLocator];

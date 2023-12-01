@@ -74,25 +74,33 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     if ([PreferencesManager isServiceRunning]) {
-        [_locationManager startMonitoringSignificantLocationChanges];
-    }
+            [_locationManager startMonitoringSignificantLocationChanges];
+            [self sendGPSStateEvent:YES];
+        } else {
+            [self sendGPSStateEvent:NO];
+        }
 }
 
 -(void)applicationWillTerminate:(UIApplication *)application {
     [self observeRegionForLocation:_lastLocation];
-    if([PreferencesManager isStopWithTerminate]){
+
+    if ([PreferencesManager isStopWithTerminate]) {
         [self removeLocator];
+        [self sendGPSStateEvent:NO]; // Notifica o Flutter que o GPS está inativo.
     }
 }
 
 - (void) observeRegionForLocation:(CLLocation *)location {
     double distanceFilter = [PreferencesManager getDistanceFilter];
     CLRegion* region = [[CLCircularRegion alloc] initWithCenter:location.coordinate
-                                                         radius:distanceFilter
-                                                     identifier:@"region"];
+                                                             radius:distanceFilter
+                                                         identifier:@"region"];
     region.notifyOnEntry = false;
     region.notifyOnExit = true;
+
     [_locationManager startMonitoringForRegion:region];
+
+
 }
 
 - (void) prepareLocationMap:(CLLocation*) location {
@@ -115,10 +123,56 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     }
 }
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            [self sendGPSStateEvent:NO];
+            NSLog(@"GPS authorization status: Not Determined");
+            break;
+        case kCLAuthorizationStatusRestricted:
+            [self sendGPSStateEvent:NO];
+            NSLog(@"GPS authorization status: Restricted");
+            break;
+        case kCLAuthorizationStatusDenied:
+            [self sendGPSStateEvent:NO];
+            NSLog(@"GPS authorization status: Denied");
+            break;
+        case kCLAuthorizationStatusAuthorizedAlways:
+            [self sendGPSStateEvent:TRUE];
+            NSLog(@"GPS authorization status: Authorized Always");
+            break;
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+            [self sendGPSStateEvent:NO];
+            NSLog(@"GPS authorization status: Authorized When In Use");
+            break;
+        default:
+            [self sendGPSStateEvent:NO];
+            NSLog(@"GPS authorization status: Unknown");
+            break;
+    }
+}
+
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     [_locationManager stopMonitoringForRegion:region];
     [_locationManager startUpdatingLocation];
 }
+
+#pragma mark LocatorPlugin Methods
+- (void)sendGPSStateEvent:(BOOL)isGPSEnabled {
+    NSString *isolateId = [_headlessRunner isolateId];
+    if (_callbackChannel == nil || isolateId == nil) {
+            return;
+        }
+
+    NSDictionary *eventData = @{
+        kArgGPSCallback: @([PreferencesManager getCallbackHandle:kGPSCallbackKey]),
+        kArgGPSStatus: @(isGPSEnabled)
+    };
+
+    [_callbackChannel invokeMethod:kBCMGpsStatus arguments:eventData];
+}
+
+
 
 #pragma mark LocatorPlugin Methods
 - (void) sendLocationEvent: (NSDictionary<NSString*,NSNumber*>*)location {
@@ -184,6 +238,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
            initCallback:(int64_t)initCallback
   initialDataDictionary:(NSDictionary*)initialDataDictionary
         disposeCallback:(int64_t)disposeCallback
+        gpsCallback:(int64_t)gpsCallback
                settings: (NSDictionary*)settings {
     [self->_locationManager requestAlwaysAuthorization];
         
@@ -208,7 +263,8 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [PreferencesManager setStopWithTerminate:stopWithTerminate];
 
     [PreferencesManager setCallbackHandle:callback key:kCallbackKey];
-    
+    [PreferencesManager setCallbackHandle:gpsCallback key:kGPSCallbackKey];
+
     InitPluggable *initPluggable = [[InitPluggable alloc] init];
     [initPluggable setCallback:initCallback];
     [initPluggable onServiceStart:initialDataDictionary];
