@@ -340,6 +340,7 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
         // Declare a flag to track the GPS state
         private var lastGpsState: Boolean? = null
         private var count = 0
+
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == LocationManager.PROVIDERS_CHANGED_ACTION) {
                 val locationManager =
@@ -347,6 +348,7 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
                 val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 // Check if the GPS state has changed
                 if ((lastGpsState != null || count > 0) && lastGpsState != isGpsEnabled) {
+                    lastGpsState = isGpsEnabled
                     val callback =
                             context?.let {
                                 PreferencesManager.getCallbackHandle(
@@ -381,7 +383,6 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
                         )
                 Handler(it.mainLooper)
                         .post {
-                            Log.d("plugin", "sendLocationEvent $result")
                             backgroundChannel.invokeMethod(Keys.BCM_SEND_LOCATION, result)
                         }
             }

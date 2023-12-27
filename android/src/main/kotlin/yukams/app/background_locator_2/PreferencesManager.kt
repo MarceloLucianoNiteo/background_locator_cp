@@ -4,6 +4,8 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import yukams.app.background_locator_2.provider.LocationClient
+import android.util.Log
+import org.json.JSONObject
 
 class PreferencesManager {
     companion object {
@@ -202,8 +204,16 @@ class PreferencesManager {
 
         @JvmStatic
         fun getDataCallback(context: Context, key: String): Map<*, *> {
-            val initialDataStr = context.getSharedPreferences(Keys.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE)
+            var initialDataStr = context.getSharedPreferences(Keys.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE)
                     .getString(key, null)
+            val sharedPreferences = context.getSharedPreferences(Keys.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE)
+            //print keys and values of shared pref
+            val keys = sharedPreferences.all
+
+            if (initialDataStr == null) {
+                initialDataStr = JSONObject().put("countInit", 1).toString()
+            }
+
             val type = object : TypeToken<Map<*, *>>() {}.type
             return Gson().fromJson(initialDataStr, type)
         }
